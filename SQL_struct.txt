@@ -1,0 +1,48 @@
+CREATE TABLE BloodTypes (
+    blood_type_id INT AUTO_INCREMENT PRIMARY KEY,
+    blood_group VARCHAR(5) NOT NULL UNIQUE
+);
+
+CREATE TABLE BloodBanks (
+    blood_bank_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    address VARCHAR(255),
+    city VARCHAR(50),
+    phone VARCHAR(15),
+    email VARCHAR(100)
+);
+
+CREATE TABLE Doctors (
+    doctor_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    specialization VARCHAR(100),
+    phone VARCHAR(15),
+    email VARCHAR(100),
+    blood_bank_id INT,
+    FOREIGN KEY (blood_bank_id) REFERENCES BloodBanks(blood_bank_id)
+);
+
+CREATE TABLE Donors (
+    donor_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT CHECK (age >= 18),
+    gender VARCHAR(10),
+    phone VARCHAR(15),
+    address VARCHAR(255),
+    blood_type_id INT,
+    last_donation_date DATE,
+    FOREIGN KEY (blood_type_id) REFERENCES BloodTypes(blood_type_id)
+);
+
+CREATE TABLE Patients (
+    patient_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT,
+    gender VARCHAR(10),
+    phone VARCHAR(15),
+    disease VARCHAR(100),
+    blood_type_id INT,
+    FOREIGN KEY (blood_type_id) REFERENCES BloodTypes(blood_type_id)
+);
+
+
